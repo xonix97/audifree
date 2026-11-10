@@ -1,0 +1,9 @@
+# Python 3.10+ (tested on 3.14 / CachyOS)
+fastapi>=0.115
+uvicorn[standard]>=0.32
+httpx>=0.27
+
+# Unofficial scrapers. They break when YouTube changes; the in-app
+# "Update yt-dlp" button upgrades both inside this venv.
+ytmusicapi>=1.10
+yt-dlp>=2025.1.15

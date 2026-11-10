@@ -1,0 +1,76 @@
+{
+  "name": "audifree",
+  "productName": "Audifree",
+  "version": "0.1.0",
+  "description": "Apple Music-inspired desktop streaming client for Linux (Electron + React + FastAPI sidecar).",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "setup": "bash scripts/setup.sh",
+    "postinstall": "install-electron",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "build:renderer": "vite build",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "build": "npm run typecheck && npm run build:renderer && npm run build:electron",
+    "start": "npm run build && electron .",
+    "dist:win": "npm run build && electron-builder --win portable --x64",
+    "backend": "bash -c 'cd backend && exec .venv/bin/python -u -m app.main'"
+  },
+  "dependencies": {
+    "framer-motion": "^14.12.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "electron": "^45.2.3",
+    "electron-builder": "^26.0.12",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.7"
+  },
+  "build": {
+    "appId": "com.audifree.app",
+    "productName": "Audifree",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Audifree-${version}-windows-x64.exe",
+      "extraResources": [
+        {
+          "from": "backend",
+          "to": "backend",
+          "filter": [
+            "**/*",
+            "!.venv/**",
+            "!runtime/**",
+            "!**/__pycache__/**",
+            "!**/*.pyc"
+          ]
+        },
+        {
+          "from": "backend/runtime/win/python",
+          "to": "backend/python"
+        }
+      ]
+    }
+  }
+}

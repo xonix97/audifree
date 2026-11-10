@@ -1,0 +1,18 @@
+node_modules/
+dist/
+dist-electron/
+release/
+.env
+.env.local
+
+# Python sidecar
+backend/.venv/
+backend/runtime/
+__pycache__/
+*.pyc
+.ruff_cache/
+
+# Local user data
+data/
+*.sqlite3
+*.db
